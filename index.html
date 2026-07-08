@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operational Excellence Diagnostic | Quality In Practice</title>
+  <meta name="description" content="A practical Operational Excellence Diagnostic for small manufacturers.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Quality In Practice diagnostic home">
+      <span class="brand-mark">QIP</span>
+      <span>
+        <strong>Quality In Practice</strong>
+        <em>Operational Excellence Diagnostic</em>
+      </span>
+    </a>
+    <nav aria-label="Diagnostic navigation">
+      <a href="#diagnostic">Start</a>
+      <a href="#results">Results</a>
+      <a href="#next-steps">Next Steps</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">For Small Manufacturers</p>
+        <h1>See where your operating system is strong, informal, or ready for the next capability.</h1>
+        <p id="introText">A practical self-assessment for small manufacturers.</p>
+        <div class="hero-actions">
+          <a class="button" href="#diagnostic">Begin diagnostic</a>
+          <button class="button secondary" type="button" id="loadSample">Load sample results</button>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="How the diagnostic works">
+        <h2>What you will get</h2>
+        <ul>
+          <li>A maturity score across six Operational Excellence dimensions.</li>
+          <li>Your strongest and weakest capability areas.</li>
+          <li>Recommended academy paths and practical next steps.</li>
+          <li>A printable summary for leadership discussion.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="instructions" aria-label="Instructions">
+      <div>
+        <strong>Rating scale</strong>
+        <p>Score each statement from 1 to 5 based on what is consistently true today, not what is intended or occasionally true.</p>
+      </div>
+      <ol id="scaleList"></ol>
+    </section>
+
+    <section class="diagnostic-layout" id="diagnostic">
+      <aside class="progress-panel" aria-label="Progress">
+        <p class="eyebrow">Progress</p>
+        <h2 id="progressTitle">0% complete</h2>
+        <progress id="progressBar" value="0" max="100"></progress>
+        <p id="progressDetail">Answer each statement to generate results.</p>
+        <button class="button secondary full" type="button" id="resetDiagnostic">Reset</button>
+      </aside>
+
+      <form class="question-form" id="diagnosticForm">
+        <div id="questionGroups"></div>
+      </form>
+    </section>
+
+    <section class="results-section" id="results" aria-live="polite">
+      <div class="section-heading">
+        <p class="eyebrow">Results</p>
+        <h2>Your Operational Excellence maturity profile</h2>
+        <p>Results update as you answer. Complete every statement for the most useful recommendations.</p>
+      </div>
+
+      <div class="results-grid">
+        <article class="score-card">
+          <span class="score-label">Overall score</span>
+          <strong id="overallScore">--</strong>
+          <span id="overallLevel">Incomplete</span>
+          <p id="overallSummary">Complete the diagnostic to see your maturity level.</p>
+        </article>
+        <article class="score-card">
+          <span class="score-label">Strongest area</span>
+          <strong id="strongestArea">--</strong>
+          <p id="strongestSummary">Your strongest area will appear here.</p>
+        </article>
+        <article class="score-card">
+          <span class="score-label">Priority area</span>
+          <strong id="priorityArea">--</strong>
+          <p id="prioritySummary">Your highest-priority capability gap will appear here.</p>
+        </article>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="resultsChart" width="900" height="360" aria-label="Diagnostic score chart"></canvas>
+      </div>
+
+      <div class="recommendations" id="recommendations"></div>
+    </section>
+
+    <section class="next-steps" id="next-steps">
+      <div>
+        <p class="eyebrow">Next Steps</p>
+        <h2>Use the results to choose the right starting point.</h2>
+        <p>Begin with a focused assessment, a targeted academy module, or fractional Operational Excellence support. The right path depends on the priority area and how much internal capability already exists.</p>
+      </div>
+      <div class="next-actions">
+        <button class="button" type="button" id="printResults">Print results</button>
+        <a class="button secondary" id="emailResults" href="mailto:info@qualityinpractice.solutions?subject=Operational%20Excellence%20Diagnostic">Discuss results</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Quality In Practice</span>
+    <span>Practical Operational Excellence and Quality capability for small manufacturers.</span>
+  </footer>
+
+  <script src="diagnostic-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
