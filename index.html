@@ -170,14 +170,13 @@
         const companyLine = `Company name: ${input.value.trim() || "Not provided"}`;
         localStorage.setItem(storageKey, input.value.trim());
         if (!link.href.startsWith("mailto:")) return;
-        const base = link.href.split("?")[0];
         const params = new URLSearchParams(link.href.includes("?") ? link.href.slice(link.href.indexOf("?") + 1) : "");
+        const subject = params.get("subject") || "Operational Excellence Diagnostic Results";
         const body = params.get("body") || "";
         const nextBody = body.includes("Company name:")
           ? body.replace(/Company name:.*(\n|$)/, `${companyLine}\n`)
           : body.replace(/\n\n/, `\n\n${companyLine}\n\n`);
-        params.set("body", nextBody || companyLine);
-        link.href = `${base}?${params.toString()}`;
+        link.href = `mailto:info@qualityinpractice.solutions?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(nextBody || companyLine)}`;
       }
 
       input.value = localStorage.getItem(storageKey) || "";
