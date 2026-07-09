@@ -159,6 +159,13 @@ h2 {
   margin-top: 28px;
 }
 
+.send-status {
+  width: 100%;
+  margin: 2px 0 0;
+  color: #d3dee7;
+  font-size: 0.92rem;
+}
+
 .button {
   min-height: 44px;
   display: inline-flex;
