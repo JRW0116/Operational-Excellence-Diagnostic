@@ -16,6 +16,7 @@
   const chart = document.getElementById("resultsChart");
   const ctx = chart.getContext("2d");
   const storageKey = "qip-op-ex-diagnostic-v1";
+  let latestResultsText = "";
 
   document.title = `${config.title} | ${config.brand}`;
   document.getElementById("introText").textContent = config.intro;
@@ -251,22 +252,49 @@
   }
 
   function updateEmailLink(scores, overall, level) {
+    const completeScores = scores.filter((score) => score.answered === score.total);
+    const sortedComplete = [...completeScores].sort((a, b) => a.score - b.score);
     const completed = scores
-      .filter((score) => score.answered === score.total)
-      .map((score) => `${score.name}: ${formatScore(score.score)}`)
-      .join("%0D%0A");
+      .map((score) => {
+        const status = score.answered === score.total ? formatScore(score.score) : `Incomplete (${score.answered}/${score.total})`;
+        return `${score.name}: ${status}`;
+      })
+      .join("\n");
+    const priority = sortedComplete[0];
+    const recommendationsText = sortedComplete
+      .map((score) => `${score.name}: ${score.recommendation}\nSuggested path: ${score.academyPath}`)
+      .join("\n\n");
     const body = [
       "I completed the Operational Excellence Diagnostic.",
       "",
       `Overall score: ${formatScore(overall)} (${overall ? level.name : "Incomplete"})`,
+      priority ? `Priority area: ${priority.name}` : "Priority area: Incomplete",
       "",
       "Dimension scores:",
       completed || "Incomplete",
       "",
-      "I would like to discuss the best next step."
-    ].join("%0D%0A");
+      "Recommended next steps:",
+      recommendationsText || "Complete the diagnostic for recommendations.",
+      "",
+      "Please follow up with me about the best next step."
+    ].join("\n");
+    latestResultsText = body;
     document.getElementById("emailResults").href =
-      `mailto:info@qualityinpractice.solutions?subject=Operational%20Excellence%20Diagnostic&body=${body}`;
+      `mailto:info@qualityinpractice.solutions?subject=${encodeURIComponent("Operational Excellence Diagnostic Results")}&body=${encodeURIComponent(body)}`;
+  }
+
+  async function copyResults() {
+    const status = document.getElementById("sendStatus");
+    if (!latestResultsText) {
+      status.textContent = "Complete at least one section before copying results.";
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(latestResultsText);
+      status.textContent = "Results copied. Paste them into an email to info@qualityinpractice.solutions.";
+    } catch {
+      status.textContent = "Copy was blocked by the browser. Use the email button to send results instead.";
+    }
   }
 
   function loadSavedAnswers() {
@@ -298,6 +326,7 @@
   });
   document.getElementById("loadSample").addEventListener("click", loadSample);
   document.getElementById("printResults").addEventListener("click", () => window.print());
+  document.getElementById("copyResults").addEventListener("click", copyResults);
 
   buildScale();
   buildQuestions();
